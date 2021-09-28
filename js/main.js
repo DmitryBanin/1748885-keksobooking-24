@@ -10,7 +10,7 @@ function getRandomInteger (min, max) {
 }
 
 
-function getRandomСoordinates (min, max, quantityNum) {
+function getRandomFloatPoint (min, max, quantityNum) {
   if (max<=min || min<0 || quantityNum<=0) {
     return 'Введено недопустимое значение';
   }
@@ -18,4 +18,4 @@ function getRandomСoordinates (min, max, quantityNum) {
 }
 
 getRandomInteger (0, 10);
-getRandomСoordinates (0, 10);
+getRandomFloatPoint (0, 10);
