@@ -60,7 +60,7 @@ function getRandomInteger (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+}
 
 // функция для рандомного дробного числа
 function getRandomFloatPoint (min, max, digits = 5) {
@@ -68,22 +68,27 @@ function getRandomFloatPoint (min, max, digits = 5) {
     return 'Введено недопустимое значение';
   }
   return (Math.random() * (max - min) + min).toFixed(digits);
-};
+}
 
 // функция вывода номера изображения аватарки
 
 const getRandomAvatar = (avatar) => {
-  avatar = ("0" + getRandomInteger (0, 10)).slice(-2);
-  return 'img/avatars/user' + avatar + '.png'
+  avatar = (`0${  getRandomInteger (0, 10)}`).slice(-2);
+  return `img/avatars/user${  avatar  }.png`;
 };
-
 
 // функция рандомного индекса массива строки
 
-const getRandomArrayElement = (elements) => {
-  return elements [getRandomInteger(0, elements.length - 1)];
+const getRandomArrayElement = (elements) => elements [getRandomInteger(0, elements.length - 1)];
+
+const getRandomValue = function (min, max) {
+  return Math.round(Math.random() * (max - min) + min);
 };
 
+const getFeatures = function (value) {
+  const randomLength = getRandomValue(0, value.length);
+  return value.slice(0, randomLength);
+};
 
 // функция рандомных координат
 
@@ -104,9 +109,9 @@ const createAdvertisement = () => {
       guests: getRandomInteger(...GUESTS),
       checkin: getRandomArrayElement(CHECKIN),
       checkout: getRandomArrayElement(CHECKOUT),
-      features: getRandomArrayElement(FEATURES),
+      features: getFeatures(FEATURES),
       description: getRandomArrayElement(DESCRIPTIONS),
-      photos: getRandomArrayElement(PHOTOS),
+      photos: getFeatures(PHOTOS),
     },
     location: {
       lat: randomLat,
@@ -116,4 +121,4 @@ const createAdvertisement = () => {
 };
 
 const objectGenerator = new Array(10).fill(null).map(createAdvertisement);
-console.log(objectGenerator);
+objectGenerator;
