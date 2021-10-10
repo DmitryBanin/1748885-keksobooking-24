@@ -92,8 +92,8 @@ const getRandomLengthArray = function (value) {
 };
 */
 
-import {TITLES, PRICES, TYPES, ROOMS, GUESTS, CHECKIN, CHECKOUT, FEATURES, DESCRIPTIONS, PHOTOS, LAT_BOUNDS, LNG_BOUNDS} from './data.mjs';
-import {getRandomAvatar, getRandomArrayElement, getRandomInteger, getRandomFloatPoint, getRandomLengthArray} from './random-functions.mjs';
+import {TITLES, PRICES, TYPES, ROOMS, GUESTS, CHECKIN, CHECKOUT, FEATURES, DESCRIPTIONS, PHOTOS, LAT_BOUNDS, LNG_BOUNDS} from './data.js';
+import {getRandomAvatar, getRandomArrayElement, getRandomInteger, getRandomFloatPoint, getRandomLengthArray} from './random-functions.js';
 
 // функция рандомных координат
 
@@ -125,5 +125,5 @@ const createAdvertisement = () => {
   };
 };
 
-const objectGenerator = new Array(1).fill(null).map(createAdvertisement);
-console.log(objectGenerator);
+const objectGenerator = new Array(10).fill(null).map(createAdvertisement);
+objectGenerator;
