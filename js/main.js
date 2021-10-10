@@ -1,3 +1,4 @@
+/*
 const TITLES = [
   'Квартира студия в престижном районе',
   'Тихая квартирка недалеко от метро',
@@ -85,10 +86,14 @@ const getRandomValue = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
 };
 
-const getFeatures = function (value) {
+const getRandomLengthArray = function (value) {
   const randomLength = getRandomValue(0, value.length);
   return value.slice(0, randomLength);
 };
+*/
+
+import {TITLES, PRICES, TYPES, ROOMS, GUESTS, CHECKIN, CHECKOUT, FEATURES, DESCRIPTIONS, PHOTOS, LAT_BOUNDS, LNG_BOUNDS} from './data.mjs';
+import {getRandomAvatar, getRandomArrayElement, getRandomInteger, getRandomFloatPoint, getRandomLengthArray} from './random-functions.mjs';
 
 // функция рандомных координат
 
@@ -109,9 +114,9 @@ const createAdvertisement = () => {
       guests: getRandomInteger(...GUESTS),
       checkin: getRandomArrayElement(CHECKIN),
       checkout: getRandomArrayElement(CHECKOUT),
-      features: getFeatures(FEATURES),
+      features: getRandomLengthArray(FEATURES),
       description: getRandomArrayElement(DESCRIPTIONS),
-      photos: getFeatures(PHOTOS),
+      photos: getRandomLengthArray(PHOTOS),
     },
     location: {
       lat: randomLat,
@@ -120,5 +125,5 @@ const createAdvertisement = () => {
   };
 };
 
-const objectGenerator = new Array(10).fill(null).map(createAdvertisement);
-objectGenerator;
+const objectGenerator = new Array(1).fill(null).map(createAdvertisement);
+console.log(objectGenerator);
