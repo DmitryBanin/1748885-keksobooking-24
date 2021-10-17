@@ -1,4 +1,3 @@
-
 // функция для рандомного целого числа
 
 function getRandomInteger (min, max) {
@@ -22,8 +21,12 @@ function getRandomFloatPoint (min, max, digits = 5) {
 // функция вывода номера изображения аватарки
 
 const getRandomAvatar = (avatar) => {
-  avatar = (`0${  getRandomInteger (0, 10)}`).slice(-2);
-  return `img/avatars/user${  avatar  }.png`;
+  const numberImg = getRandomInteger (0, 11);
+  if (numberImg > 0) {
+    avatar = (`0${ numberImg }`).slice(-2);
+    return `img/avatars/user${  avatar  }.png`;
+  }
+  else {return 'img/avatars/default.png';}
 };
 
 // функция рандомного индекса массива строки
@@ -40,3 +43,4 @@ const getRandomLengthArray = function (value) {
 };
 
 export {getRandomInteger, getRandomFloatPoint, getRandomAvatar, getRandomArrayElement, getRandomLengthArray};
+// export {getEnding};
