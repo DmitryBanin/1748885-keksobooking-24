@@ -1,5 +1,4 @@
 import {objectGenerator} from './data.js';
-// import {getEnding} from './random-functions.js';
 
 // Генерация разметки похожих элементов
 
@@ -15,8 +14,8 @@ objectGenerator.forEach(({author, offer, location}) => {
   popups.querySelector('.popup__title').textContent = offer.title;
   popups.querySelector('.popup__text--address').textContent = location.address;
   popups.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
-  //строкой вида {{offer.price}} ₽/ночь
 
+  //выведим тип жилья сопоставив с подписями
   const GUP = popups.querySelector('.popup__type');
   switch (offer.type) {
     case 'flat':
@@ -36,19 +35,14 @@ objectGenerator.forEach(({author, offer, location}) => {
       break;
   }
 
-  popups.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гость.`;
-
-  // const number = offer.guests;
-  // const sklonenie = (number, txt) => txt[(number > 1 ) ? 0 : txt[(number === 1) ? 1]
-  // popups.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гост${sklonenie(number, ['ь', 'ей'])}.`;
-
+  popups.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей.`;
   popups.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}.`;
 
-
+  //вывод всех доступных удобств в объявлении
   const FEATURES = offer.features;
   const elementContainer = popups.querySelector('.popup__features');
   const elementList = elementContainer.querySelectorAll('.popup__feature');
-  const modifiers = FEATURES.map((userEmotion) => `popup__feature--${userEmotion}`);
+  const modifiers = FEATURES.map((facilities) => `popup__feature--${facilities}`);
 
   elementList.forEach((elementListItem) => {
     const modifier = elementListItem.classList[1];
@@ -58,18 +52,17 @@ objectGenerator.forEach(({author, offer, location}) => {
     }
   });
 
-  //выведите все доступные удобства в объявлении
   popups.querySelector('.popup__description').textContent = offer.description;
 
-  //записать в атрибут src соответствующие иображения
+  //записываем в атрибут src изображения
   const PHOTOS = popups.querySelector('.popup__photos');
   const IMG = PHOTOS.querySelector('.popup__photo');
-  const arrFotos = offer.photos;
+  const arrayPhotos = offer.photos;
   PHOTOS.innerHTML = '';
 
-  for (let i=0; i<arrFotos.length; i++) {
+  for (let i=0; i<arrayPhotos.length; i++) {
     const element = IMG.cloneNode(false);
-    PHOTOS.appendChild(element).src = arrFotos[i];
+    PHOTOS.appendChild(element).src = arrayPhotos[i];
   }
 
   popups.querySelector('.popup__avatar').src = author.avatar;
