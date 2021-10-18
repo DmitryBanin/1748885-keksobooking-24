@@ -1,3 +1,5 @@
+import {getRandomAvatar, getRandomArrayElement, getRandomInteger, getRandomFloatPoint, getRandomLengthArray} from './random-functions.js';
+
 const TITLES = [
   'Квартира студия в престижном районе',
   'Тихая квартирка недалеко от метро',
@@ -52,4 +54,36 @@ const LNG_BOUNDS = [
   139.80000,
 ];
 
-export {TITLES, PRICES, TYPES, ROOMS, GUESTS, CHECKIN, CHECKOUT, FEATURES, DESCRIPTIONS, PHOTOS, LAT_BOUNDS, LNG_BOUNDS};
+
+// функция рандомных координат
+
+const createAdvertisement = () => {
+  const randomLat = getRandomFloatPoint(...LAT_BOUNDS);
+  const randomLng = getRandomFloatPoint(...LNG_BOUNDS);
+
+  return {
+    author: {
+      avatar: getRandomAvatar(),
+    },
+    offer: {
+      title: getRandomArrayElement(TITLES),
+      address: `${randomLat}, ${randomLng}`,
+      price: getRandomInteger(...PRICES),
+      type: getRandomArrayElement(TYPES),
+      rooms: getRandomInteger(...ROOMS),
+      guests: getRandomInteger(...GUESTS),
+      checkin: getRandomArrayElement(CHECKIN),
+      checkout: getRandomArrayElement(CHECKOUT),
+      features: getRandomLengthArray(FEATURES),
+      description: getRandomArrayElement(DESCRIPTIONS),
+      photos: getRandomLengthArray(PHOTOS),
+    },
+    location: {
+      lat: randomLat,
+      lng: randomLng,
+    },
+  };
+};
+
+const objectGenerator = new Array(1).fill(null).map(createAdvertisement);
+export {objectGenerator};

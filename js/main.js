@@ -90,10 +90,11 @@ const getRandomLengthArray = function (value) {
   const randomLength = getRandomValue(0, value.length);
   return value.slice(0, randomLength);
 };
-*/
+
 
 import {TITLES, PRICES, TYPES, ROOMS, GUESTS, CHECKIN, CHECKOUT, FEATURES, DESCRIPTIONS, PHOTOS, LAT_BOUNDS, LNG_BOUNDS} from './data.js';
 import {getRandomAvatar, getRandomArrayElement, getRandomInteger, getRandomFloatPoint, getRandomLengthArray} from './random-functions.js';
+
 
 // функция рандомных координат
 
@@ -127,3 +128,6 @@ const createAdvertisement = () => {
 
 const objectGenerator = new Array(10).fill(null).map(createAdvertisement);
 objectGenerator;
+*/
+
+import './creating-markup.js';
