@@ -43,4 +43,3 @@ const getRandomLengthArray = function (value) {
 };
 
 export {getRandomInteger, getRandomFloatPoint, getRandomAvatar, getRandomArrayElement, getRandomLengthArray};
-// export {getEnding};
