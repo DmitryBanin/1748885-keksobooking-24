@@ -35,7 +35,9 @@ objectGenerator.forEach(({author, offer, location}) => {
       break;
   }
 
-  popups.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей.`;
+  const roomsEnding = (offer.rooms === 1) ? 'а' : 'ы';
+  const guestsEnding = (offer.guests === 1) ? 'я' : 'ей';
+  popups.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнат${roomsEnding} для ${offer.guests} гост${guestsEnding}.`;
   popups.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}.`;
 
   //вывод всех доступных удобств в объявлении
