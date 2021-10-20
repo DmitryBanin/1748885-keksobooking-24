@@ -1,3 +1,6 @@
+import './creating-markup.js';
+import './form.js';
+
 /*
 const TITLES = [
   'Квартира студия в престижном районе',
@@ -130,4 +133,4 @@ const objectGenerator = new Array(10).fill(null).map(createAdvertisement);
 objectGenerator;
 */
 
-import './creating-markup.js';
+
