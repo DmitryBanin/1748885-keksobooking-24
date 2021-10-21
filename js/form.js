@@ -23,7 +23,6 @@ TITLE.addEventListener('input', () => {
   TITLE.reportValidity();
 });
 
-
 const ROOMS_GUESTS = {
   1: ['1'],
   2: ['1', '2'],
