@@ -16,6 +16,7 @@ objectGenerator.forEach(({author, offer, location}) => {
   popups.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
 
   //выведим тип жилья сопоставив с подписями
+
   const GUP = popups.querySelector('.popup__type');
   switch (offer.type) {
     case 'flat':
@@ -41,6 +42,7 @@ objectGenerator.forEach(({author, offer, location}) => {
   popups.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}.`;
 
   //вывод всех доступных удобств в объявлении
+
   const FEATURES = offer.features;
   const elementContainer = popups.querySelector('.popup__features');
   const elementList = elementContainer.querySelectorAll('.popup__feature');
@@ -57,12 +59,13 @@ objectGenerator.forEach(({author, offer, location}) => {
   popups.querySelector('.popup__description').textContent = offer.description;
 
   //записываем в атрибут src изображения
+
   const PHOTOS = popups.querySelector('.popup__photos');
   const IMG = PHOTOS.querySelector('.popup__photo');
   const arrayPhotos = offer.photos;
   PHOTOS.innerHTML = '';
 
-  for (let i=0; i<arrayPhotos.length; i++) {
+  for (let i = 0; i < arrayPhotos.length; i++) {
     const element = IMG.cloneNode(false);
     PHOTOS.appendChild(element).src = arrayPhotos[i];
   }

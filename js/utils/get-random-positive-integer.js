@@ -27,4 +27,4 @@ function getRandomPositiveInteger (min, max) {
   return Math.floor(result);
 }
 
-getRandomPositiveInteger (0, 10);
+getRandomPositiveInteger(0, 10);
