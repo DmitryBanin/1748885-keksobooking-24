@@ -1,6 +1,7 @@
 
 // код для валидации формы добавления объявления
 const AD_FORM = document.querySelector('.ad-form');
+const MAP_FILTERS = document.querySelector('.map__filters');
 const TITLE = AD_FORM.querySelector('#title');
 const ROOM_NUMBER = AD_FORM.querySelector('#room_number');
 const CAPACITY = AD_FORM.querySelector('#capacity');
@@ -9,6 +10,36 @@ const TYPE = AD_FORM.querySelector('#type');
 const TIME_IN = AD_FORM.querySelector('#timein');
 const TIME_OUT = AD_FORM.querySelector('#timeout');
 //const ADDRESS = AD_FORM.querySelector('#address');
+
+function getPagesDisabled () {
+  const FIELDSET = AD_FORM.querySelectorAll('fieldset');
+  FIELDSET.forEach((disabled) => {
+    AD_FORM.classList.add('ad-form--disabled');
+    disabled.setAttribute('disabled', 'disabled');
+  });
+  const SELECT = MAP_FILTERS.querySelectorAll('select');
+  SELECT.forEach((disabled) => {
+    MAP_FILTERS.classList.add('map__filters--disabled');
+    disabled.setAttribute('disabled', 'disabled');
+  });
+}
+
+getPagesDisabled ();
+
+function getActivate () {
+  const FIELDSET = AD_FORM.querySelectorAll('fieldset');
+  FIELDSET.forEach((disabled) => {
+    AD_FORM.classList.remove('ad-form--disabled');
+    disabled.removeAttribute('disabled', 'disabled');
+  });
+  const SELECT = MAP_FILTERS.querySelectorAll('select');
+  SELECT.forEach((disabled) => {
+    MAP_FILTERS.classList.remove('map__filters--disabled');
+    disabled.removeAttribute('disabled', 'disabled');
+  });
+}
+
+getActivate ();
 
 const MIN_TEXT_LENGTH = 30;
 const MAX_TEXT_LENGTH = 100;
@@ -83,18 +114,24 @@ changeHousingType(TYPE.value);
 
 TYPE.addEventListener('change', (evt) => {
   changeHousingType(evt.target.value);
-  if (TYPE.value === 'bungalow') {
-    PRICE.min = 0;
-  } else if (TYPE.value === 'flat') {
-    PRICE.min = 1000;
-  } else if (TYPE.value === 'hotel') {
-    PRICE.min = 3000;
-  } else if (TYPE.value === 'house') {
-    PRICE.min = 5000;
-  } else if (TYPE.value === 'palace') {
-    PRICE.min = 10000;
-  } else {
-    PRICE.setCustomValidity('');
+  switch (TYPE.value) {
+    case 'bungalow':
+      PRICE.min = 0;
+      break;
+    case 'flat':
+      PRICE.min = 1000;
+      break;
+    case 'hotel':
+      PRICE.min = 3000;
+      break;
+    case 'house':
+      PRICE.min = 5000;
+      break;
+    case 'palace':
+      PRICE.min = 10000;
+      break;
+    default:
+      return PRICE.setCustomValidity('');
   }
   PRICE.reportValidity();
 });
@@ -126,3 +163,4 @@ TIME_IN.addEventListener('change', (evt) => {
 TIME_OUT.addEventListener('change', (evt) =>{
   changeTimeInValue(evt.target.value);
 });
+
