@@ -1,7 +1,7 @@
 // функция для рандомного целого числа
 
 function getRandomInteger (min, max) {
-  if (max<=min || min<0) {
+  if (max <= min || min < 0) {
     return 'Введено недопустимое значение';
   }
   min = Math.ceil(min);
@@ -12,7 +12,7 @@ function getRandomInteger (min, max) {
 // функция для рандомного дробного числа
 
 function getRandomFloatPoint (min, max, digits = 5) {
-  if (max<=min || min<0 || digits<=0) {
+  if (max <= min || min < 0 || digits <= 0 || isNaN(min) || isNaN(max)) {
     return 'Введено недопустимое значение';
   }
   return (Math.random() * (max - min) + min).toFixed(digits);
@@ -21,10 +21,10 @@ function getRandomFloatPoint (min, max, digits = 5) {
 // функция вывода номера изображения аватарки
 
 const getRandomAvatar = (avatar) => {
-  const numberImg = getRandomInteger (0, 11);
-  if (numberImg > 0) {
+  const numberImg = getRandomInteger(0, 11);
+  if (numberImg) {
     avatar = (`0${ numberImg }`).slice(-2);
-    return `img/avatars/user${  avatar  }.png`;
+    return `img/avatars/user${ avatar }.png`;
   }
   else {return 'img/avatars/default.png';}
 };

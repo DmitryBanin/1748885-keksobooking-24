@@ -21,4 +21,4 @@ function getRandomPositiveFloat (min, max, digits = 1) {
   return result.toFixed(digits);
 }
 
-getRandomPositiveFloat (0, 10);
+getRandomPositiveFloat(0, 10);
