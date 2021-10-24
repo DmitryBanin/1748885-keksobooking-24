@@ -12,14 +12,14 @@ const TIME_OUT = AD_FORM.querySelector('#timeout');
 //const ADDRESS = AD_FORM.querySelector('#address');
 
 function getPagesDisabled () {
+  AD_FORM.classList.add('ad-form--disabled');
   const FIELDSET = AD_FORM.querySelectorAll('fieldset');
   FIELDSET.forEach((disabled) => {
-    AD_FORM.classList.add('ad-form--disabled');
     disabled.setAttribute('disabled', 'disabled');
   });
+  MAP_FILTERS.classList.add('map__filters--disabled');
   const SELECT = MAP_FILTERS.querySelectorAll('select');
   SELECT.forEach((disabled) => {
-    MAP_FILTERS.classList.add('map__filters--disabled');
     disabled.setAttribute('disabled', 'disabled');
   });
 }
@@ -27,14 +27,14 @@ function getPagesDisabled () {
 getPagesDisabled ();
 
 function getActivate () {
+  AD_FORM.classList.remove('ad-form--disabled');
   const FIELDSET = AD_FORM.querySelectorAll('fieldset');
   FIELDSET.forEach((disabled) => {
-    AD_FORM.classList.remove('ad-form--disabled');
     disabled.removeAttribute('disabled', 'disabled');
   });
+  MAP_FILTERS.classList.remove('map__filters--disabled');
   const SELECT = MAP_FILTERS.querySelectorAll('select');
   SELECT.forEach((disabled) => {
-    MAP_FILTERS.classList.remove('map__filters--disabled');
     disabled.removeAttribute('disabled', 'disabled');
   });
 }
