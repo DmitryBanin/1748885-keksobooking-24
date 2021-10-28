@@ -1,21 +1,13 @@
-import {objectGenerator} from './data.js';
-
-// Генерация разметки похожих элементов
-
-const insertIntoBlock = document.querySelector('.map__canvas');
-const cardTemplate = document.querySelector('#card')
-  .content
-  .querySelector('.popup');
-
-const insert = document.createDocumentFragment();
-
-objectGenerator.forEach(({author, offer, location}) => {
+const createCustomPopup = (point) => {
+  const  {author, offer} = point;
+  const cardTemplate = document.querySelector('#card')
+    .content
+    .querySelector('.popup');
   const popups = cardTemplate.cloneNode(true);
-  popups.querySelector('.popup__title').textContent = offer.title;
-  popups.querySelector('.popup__text--address').textContent = location.address;
-  popups.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
 
-  //выведим тип жилья сопоставив с подписями
+  popups.querySelector('.popup__title').textContent = offer.title;
+  popups.querySelector('.popup__text--address').textContent = offer.address;
+  popups.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
 
   const GUP = popups.querySelector('.popup__type');
   switch (offer.type) {
@@ -41,8 +33,6 @@ objectGenerator.forEach(({author, offer, location}) => {
   popups.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнат${roomsEnding} для ${offer.guests} гост${guestsEnding}.`;
   popups.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}.`;
 
-  //вывод всех доступных удобств в объявлении
-
   const FEATURES = offer.features;
   const elementContainer = popups.querySelector('.popup__features');
   const elementList = elementContainer.querySelectorAll('.popup__feature');
@@ -58,8 +48,6 @@ objectGenerator.forEach(({author, offer, location}) => {
 
   popups.querySelector('.popup__description').textContent = offer.description;
 
-  //записываем в атрибут src изображения
-
   const PHOTOS = popups.querySelector('.popup__photos');
   const IMG = PHOTOS.querySelector('.popup__photo');
   const arrayPhotos = offer.photos;
@@ -71,7 +59,7 @@ objectGenerator.forEach(({author, offer, location}) => {
   }
 
   popups.querySelector('.popup__avatar').src = author.avatar;
-  insert.appendChild(popups);
-});
+  return popups;
+};
 
-insertIntoBlock.appendChild(insert);
+export {createCustomPopup};
