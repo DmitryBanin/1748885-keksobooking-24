@@ -24,9 +24,7 @@ function getPagesDisabled () {
   });
 }
 
-getPagesDisabled ();
-
-function getActivate () {
+function getPagesActivate () {
   AD_FORM.classList.remove('ad-form--disabled');
   const FIELDSET = AD_FORM.querySelectorAll('fieldset');
   FIELDSET.forEach((disabled) => {
@@ -38,8 +36,6 @@ function getActivate () {
     disabled.removeAttribute('disabled', 'disabled');
   });
 }
-
-getActivate ();
 
 const MIN_TEXT_LENGTH = 30;
 const MAX_TEXT_LENGTH = 100;
@@ -164,3 +160,5 @@ TIME_OUT.addEventListener('change', (evt) =>{
   changeTimeInValue(evt.target.value);
 });
 
+getPagesDisabled ();
+export {getPagesActivate};
