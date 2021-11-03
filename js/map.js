@@ -52,9 +52,13 @@ marker.addTo(map);
 
 // Координат в поле Адреса
 
-marker.on('dragend', (evt) => {
+marker.on('drag', (evt) => {
   const ADDRESS = document.querySelector('#address');
-  ADDRESS.value = evt.target.getLatLng();
+  const arrayСoordinates = evt.target.getLatLng();
+  const {lat, lng} = arrayСoordinates;
+  const LAT = lat.toFixed(5);
+  const LNG = lng.toFixed(5);
+  ADDRESS.value = `${LAT}, ${LNG}`;
 });
 
 const markerGroup = L.layerGroup().addTo(map);
