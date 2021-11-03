@@ -1,5 +1,4 @@
 import {getPagesActivate} from './form.js';
-import {objectGenerator} from './data.js';
 import {createCustomPopup} from './creating-markup.js';
 
 const map = L.map('map-canvas')
@@ -9,7 +8,7 @@ const map = L.map('map-canvas')
   .setView({
     lat: 35.681729,
     lng: 139.753927,
-  }, 10);
+  }, 13);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -37,11 +36,23 @@ const marker = L.marker(
   },
 );
 
+const resetMarker = () => {
+  marker.setLatLng({
+    lat: 35.681729,
+    lng: 139.753927,
+  });
+
+  map.setView({
+    lat: 35.681729,
+    lng: 139.753927,
+  }, 13);
+};
+
 marker.addTo(map);
 
-// Вывод координат в поле Адреса
+// Координат в поле Адреса
 
-marker.on('drag', (evt) => {
+marker.on('dragend', (evt) => {
   const ADDRESS = document.querySelector('#address');
   ADDRESS.value = evt.target.getLatLng();
 });
@@ -73,6 +84,4 @@ const createMarker = (point) => {
     .bindPopup(createCustomPopup(point));
 };
 
-objectGenerator.forEach((point) => {
-  createMarker(point);
-});
+export {createMarker, map, resetMarker};
