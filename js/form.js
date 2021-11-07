@@ -1,4 +1,3 @@
-
 // код для валидации формы добавления объявления
 const AD_FORM = document.querySelector('.ad-form');
 const MAP_FILTERS = document.querySelector('.map__filters');
@@ -9,7 +8,6 @@ const PRICE = AD_FORM.querySelector('#price');
 const TYPE = AD_FORM.querySelector('#type');
 const TIME_IN = AD_FORM.querySelector('#timein');
 const TIME_OUT = AD_FORM.querySelector('#timeout');
-//const ADDRESS = AD_FORM.querySelector('#address');
 
 function getPagesDisabled () {
   AD_FORM.classList.add('ad-form--disabled');
@@ -152,13 +150,6 @@ TIME_OUT.addEventListener('change', (evt) =>{
   changeTimeInValue(evt.target.value);
 });
 
-TIME_IN.addEventListener('change', (evt) => {
-  changeTimeOutValue(evt.target.value);
-});
-
-TIME_OUT.addEventListener('change', (evt) =>{
-  changeTimeInValue(evt.target.value);
-});
-
 getPagesDisabled ();
-export {getPagesActivate};
+
+export {getPagesActivate, AD_FORM, MAP_FILTERS};

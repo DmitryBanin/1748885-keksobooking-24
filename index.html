@@ -92,7 +92,7 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
-          <input id="address" name="address" type="text" readonly value="LatLng(35.681729, 139.753927)">
+          <input id="address" name="address" type="text" readonly value="35.68172, 139.75392">
         </fieldset>
         <fieldset class="ad-form__element" >
           <label class="ad-form__label" for="type" >Тип жилья</label >
@@ -133,9 +133,9 @@
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="capacity">Количество мест</label>
           <select id="capacity" name="capacity">
-            <option value="3" selected>для 3 гостей</option>
+            <option value="3">для 3 гостей</option>
             <option value="2">для 2 гостей</option>
-            <option value="1">для 1 гостя</option>
+            <option value="1" selected>для 1 гостя</option>
             <option value="0">не для гостей</option>
           </select>
         </fieldset>
@@ -170,7 +170,7 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--submit">
           <button class="ad-form__submit" type="submit">Опубликовать</button>
-          или <button class="ad-form__reset" type="reset">очистить</button>
+          <button class="ad-form__reset" type="reset">очистить</button>
         </fieldset>
       </form>
     </section>
@@ -232,6 +232,5 @@
   </template>
   <script src="./js/main.js" type="module"></script>
   <script src="./leaflet/leaflet.js"></script>
-  <!-- <script src="./leaflet/leaflet.js.map" type="module"></script> -->
 </body>
 </html>
