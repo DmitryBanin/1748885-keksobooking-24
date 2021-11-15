@@ -9,6 +9,8 @@ const TYPE = AD_FORM.querySelector('#type');
 const TIME_IN = AD_FORM.querySelector('#timein');
 const TIME_OUT = AD_FORM.querySelector('#timeout');
 
+// Деактивация формы
+
 function getPagesDisabled () {
   AD_FORM.classList.add('ad-form--disabled');
   const FIELDSET = AD_FORM.querySelectorAll('fieldset');
@@ -21,6 +23,8 @@ function getPagesDisabled () {
     disabled.setAttribute('disabled', 'disabled');
   });
 }
+
+// Активация формы
 
 function getPagesActivate () {
   AD_FORM.classList.remove('ad-form--disabled');
