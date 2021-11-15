@@ -1,51 +1,52 @@
 const createCustomPopup = (point) => {
   const  {author, offer} = point;
-  const cardTemplate = document.querySelector('#card')
+  const cardTemplateElement = document.querySelector('#card')
     .content
     .querySelector('.popup');
-  const popups = cardTemplate.cloneNode(true);
-  popups.querySelector('.popup__title').textContent = offer.title;
-  popups.querySelector('.popup__text--address').textContent = offer.address;
-  popups.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
-  const GUP = popups.querySelector('.popup__type');
+  const popupsCloneNode = cardTemplateElement.cloneNode(true);
+  popupsCloneNode.querySelector('.popup__title').textContent = offer.title;
+  popupsCloneNode.querySelector('.popup__text--address').textContent = offer.address;
+  popupsCloneNode.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
+  const popupTypeElement = popupsCloneNode.querySelector('.popup__type');
+
   switch (offer.type) {
     case 'flat':
-      GUP.textContent = 'Квартира';
+      popupTypeElement.textContent = 'Квартира';
       break;
     case 'bungalow':
-      GUP.textContent = 'Бунгало';
+      popupTypeElement.textContent = 'Бунгало';
       break;
     case 'house':
-      GUP.textContent = 'Дом';
+      popupTypeElement.textContent = 'Дом';
       break;
     case 'palace':
-      GUP.textContent = 'Дворец';
+      popupTypeElement.textContent = 'Дворец';
       break;
     case 'hotel':
-      GUP.textContent = 'Отель';
+      popupTypeElement.textContent = 'Отель';
       break;
   }
 
-  let roomsEnding;
+  let declensionWordsRooms;
   if (offer.rooms === 1) {
-    roomsEnding = 'а';
+    declensionWordsRooms = 'а';
   } else if (offer.rooms >= 5) {
-    roomsEnding = '';
+    declensionWordsRooms = '';
   } else {
-    roomsEnding = 'ы';
+    declensionWordsRooms = 'ы';
   }
 
-  const guestsEnding = (offer.guests === 1) ? 'я' : 'ей';
-  popups.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнат${roomsEnding} для ${offer.guests} гост${guestsEnding}.`;
-  popups.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}.`;
+  const declensionWordsGuests = (offer.guests === 1) ? 'я' : 'ей';
+  popupsCloneNode.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнат${declensionWordsRooms} для ${offer.guests} гост${declensionWordsGuests}.`;
+  popupsCloneNode.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}.`;
 
-  const FEATURES = offer.features;
-  const elementContainer = popups.querySelector('.popup__features');
-  if (!FEATURES) {
-    elementContainer.innerHTML = '';
+  const featursArray = offer.features;
+  const popupsFeaturesElement = popupsCloneNode.querySelector('.popup__features');
+  if (!featursArray) {
+    popupsFeaturesElement.innerHTML = '';
   } else {
-    const elementList = elementContainer.querySelectorAll('.popup__feature');
-    const modifiers = FEATURES.map((facilities) => `popup__feature--${facilities}`);
+    const elementList = popupsFeaturesElement.querySelectorAll('.popup__feature');
+    const modifiers = featursArray.map((facilities) => `popup__feature--${facilities}`);
 
     elementList.forEach((elementListItem) => {
       const modifier = elementListItem.classList[1];
@@ -56,23 +57,23 @@ const createCustomPopup = (point) => {
     });
   }
 
-  popups.querySelector('.popup__description').textContent = offer.description;
+  popupsCloneNode.querySelector('.popup__description').textContent = offer.description;
 
-  const arrayPhotos = offer.photos;
-  const PHOTOS = popups.querySelector('.popup__photos');
-  if (!arrayPhotos) {
-    PHOTOS.innerHTML = '';
+  const photoArray = offer.photos;
+  const popupPhotoElements = popupsCloneNode.querySelector('.popup__photos');
+  if (!photoArray) {
+    popupPhotoElements.innerHTML = '';
   } else {
-    const IMG = PHOTOS.querySelector('.popup__photo');
-    PHOTOS.innerHTML = '';
+    const popupPhotoElement = popupPhotoElements.querySelector('.popup__photo');
+    popupPhotoElements.innerHTML = '';
 
-    for (let i = 0; i < arrayPhotos.length; i++) {
-      const element = IMG.cloneNode(false);
-      PHOTOS.appendChild(element).src = arrayPhotos[i];
+    for (let i = 0; i < photoArray.length; i++) {
+      const element = popupPhotoElement.cloneNode(false);
+      popupPhotoElements.appendChild(element).src = photoArray[i];
     }
   }
-  popups.querySelector('.popup__avatar').src = author.avatar;
-  return popups;
+  popupsCloneNode.querySelector('.popup__avatar').src = author.avatar;
+  return popupsCloneNode;
 };
 
 export {createCustomPopup};

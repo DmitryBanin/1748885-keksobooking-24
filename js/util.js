@@ -1,7 +1,5 @@
-import {AD_FORM, MAP_FILTERS} from './form.js';
+import {formElement, mapFiltersElement} from './form.js';
 import {map, resetMarker, markerGroup} from './map.js';
-
-// Сообщение об ошибки создания объявления
 
 const getError = () => {
   const error = document.querySelector('#error')
@@ -24,8 +22,6 @@ const getError = () => {
   });
 };
 
-// Сообщение об успешном создании объявления
-
 const getSuccess = () => {
   const ERROR_SHOW_TIME = 1500;
   const success = document.querySelector('#success')
@@ -37,21 +33,19 @@ const getSuccess = () => {
 
   setTimeout(() => {
     successElement.remove();
-    AD_FORM.reset();
-    MAP_FILTERS.reset();
+    formElement.reset();
+    mapFiltersElement.reset();
     map.closePopup();
     resetMarker();
   }, ERROR_SHOW_TIME);
 };
 
-// очистить
-
 const reset = document.querySelector('.ad-form__reset');
 
 reset.addEventListener('click', (evt) => {
   evt.preventDefault();
-  MAP_FILTERS.reset();
-  AD_FORM.reset();
+  mapFiltersElement.reset();
+  formElement.reset();
   map.closePopup();
   resetMarker();
 });
@@ -65,7 +59,7 @@ function getRandomInteger (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const resetFilter = () => {
+const resetMapShow = () => {
   map.closePopup();
   resetMarker();
   markerGroup.clearLayers();
@@ -92,4 +86,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getError, getSuccess, getRandomInteger, resetFilter, showAlert};
+export {getError, getSuccess, getRandomInteger, resetMapShow, showAlert};

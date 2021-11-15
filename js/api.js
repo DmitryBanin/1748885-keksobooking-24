@@ -1,8 +1,6 @@
-// import {createMarker} from './map.js';
 import {getError, getSuccess, showAlert} from './util.js';
-import {AD_FORM} from './form.js';
+import {formElement} from './form.js';
 
-// Получение данных с сервера
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
     .then((response) => {
@@ -19,9 +17,7 @@ const getData = (onSuccess) => {
     });
 };
 
-// Отправка данных на сервер
-
-AD_FORM.addEventListener('submit', (evt) => {
+formElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   const formData = new FormData(evt.target);

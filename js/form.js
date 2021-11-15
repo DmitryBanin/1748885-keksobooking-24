@@ -1,40 +1,35 @@
-// код для валидации формы добавления объявления
-const AD_FORM = document.querySelector('.ad-form');
-const MAP_FILTERS = document.querySelector('.map__filters');
-const TITLE = AD_FORM.querySelector('#title');
-const ROOM_NUMBER = AD_FORM.querySelector('#room_number');
-const CAPACITY = AD_FORM.querySelector('#capacity');
-const PRICE = AD_FORM.querySelector('#price');
-const TYPE = AD_FORM.querySelector('#type');
-const TIME_IN = AD_FORM.querySelector('#timein');
-const TIME_OUT = AD_FORM.querySelector('#timeout');
-
-// Деактивация формы
+const formElement = document.querySelector('.ad-form');
+const mapFiltersElement = document.querySelector('.map__filters');
+const titleElement = formElement.querySelector('#title');
+const roomNumberElement = formElement.querySelector('#room_number');
+const capacityElement = formElement.querySelector('#capacity');
+const priceElement = formElement.querySelector('#price');
+const typeElement = formElement.querySelector('#type');
+const timeInElement = formElement.querySelector('#timein');
+const timeOutElement = formElement.querySelector('#timeout');
 
 function getPagesDisabled () {
-  AD_FORM.classList.add('ad-form--disabled');
-  const FIELDSET = AD_FORM.querySelectorAll('fieldset');
-  FIELDSET.forEach((disabled) => {
+  formElement.classList.add('ad-form--disabled');
+  const fieldsetElements = formElement.querySelectorAll('fieldset');
+  fieldsetElements.forEach((disabled) => {
     disabled.setAttribute('disabled', 'disabled');
   });
-  MAP_FILTERS.classList.add('map__filters--disabled');
-  const SELECT = MAP_FILTERS.querySelectorAll('select');
-  SELECT.forEach((disabled) => {
+  mapFiltersElement.classList.add('map__filters--disabled');
+  const selectElements = mapFiltersElement.querySelectorAll('select');
+  selectElements.forEach((disabled) => {
     disabled.setAttribute('disabled', 'disabled');
   });
 }
 
-// Активация формы
-
 function getPagesActivate () {
-  AD_FORM.classList.remove('ad-form--disabled');
-  const FIELDSET = AD_FORM.querySelectorAll('fieldset');
-  FIELDSET.forEach((disabled) => {
+  formElement.classList.remove('ad-form--disabled');
+  const fieldsetElements = formElement.querySelectorAll('fieldset');
+  fieldsetElements.forEach((disabled) => {
     disabled.removeAttribute('disabled', 'disabled');
   });
-  MAP_FILTERS.classList.remove('map__filters--disabled');
-  const SELECT = MAP_FILTERS.querySelectorAll('select');
-  SELECT.forEach((disabled) => {
+  mapFiltersElement.classList.remove('map__filters--disabled');
+  const selectElements = mapFiltersElement.querySelectorAll('select');
+  selectElements.forEach((disabled) => {
     disabled.removeAttribute('disabled', 'disabled');
   });
 }
@@ -42,21 +37,19 @@ function getPagesActivate () {
 const MIN_TEXT_LENGTH = 30;
 const MAX_TEXT_LENGTH = 100;
 
-TITLE.addEventListener('input', () => {
-  const valueLength = TITLE.value.length;
+titleElement.addEventListener('input', () => {
+  const valueLength = titleElement.value.length;
   if (valueLength < MIN_TEXT_LENGTH) {
-    TITLE.setCustomValidity(`Ещё ${ MIN_TEXT_LENGTH - valueLength } симв.`);
+    titleElement.setCustomValidity(`Ещё ${ MIN_TEXT_LENGTH - valueLength } симв.`);
   } else if (valueLength > MAX_TEXT_LENGTH) {
-    TITLE.setCustomValidity(`Удалите лишние ${ valueLength - MAX_TEXT_LENGTH } симв.`);
+    titleElement.setCustomValidity(`Удалите лишние ${ valueLength - MAX_TEXT_LENGTH } симв.`);
   } else {
-    TITLE.setCustomValidity('');
+    titleElement.setCustomValidity('');
   }
-  TITLE.reportValidity();
+  titleElement.reportValidity();
 });
 
-// Количество комнат - Количество мест
-
-const RoomsGuests = {
+const roomsGuests = {
   1: ['1'],
   2: ['1', '2'],
   3: ['1', '2', '3'],
@@ -64,21 +57,19 @@ const RoomsGuests = {
 };
 
 const changeRoomNumberValue = (value) => {
-  [...CAPACITY.options].forEach((option) => {
-    option.disabled = !RoomsGuests[value].includes(option.value);
+  [...capacityElement.options].forEach((option) => {
+    option.disabled = !roomsGuests[value].includes(option.value);
   });
-  CAPACITY.value = value > 3 ? '0' : value;
+  capacityElement.value = value > 3 ? '0' : value;
 };
 
-changeRoomNumberValue(ROOM_NUMBER.value);
+changeRoomNumberValue(roomNumberElement.value);
 
-ROOM_NUMBER.addEventListener('change', (evt) => {
+roomNumberElement.addEventListener('change', (evt) => {
   changeRoomNumberValue(evt.target.value);
 });
 
-// Тип жилья - Цена за ночь
-
-const RoomsPrices = {
+const roomsPrices = {
   BUNGALOW: 0,
   FLAT: 1000,
   HOTEL: 3000,
@@ -90,70 +81,68 @@ const changeHousingType = (value) => {
   let roomPrice = 0;
   switch (value) {
     case 'bungalow':
-      roomPrice = RoomsPrices.BUNGALOW;
+      roomPrice = roomsPrices.BUNGALOW;
       break;
     case 'flat':
-      roomPrice = RoomsPrices.FLAT;
+      roomPrice = roomsPrices.FLAT;
       break;
     case 'hotel':
-      roomPrice = RoomsPrices.HOTEL;
+      roomPrice = roomsPrices.HOTEL;
       break;
     case 'house':
-      roomPrice = RoomsPrices.HOUSE;
+      roomPrice = roomsPrices.HOUSE;
       break;
     case 'palace':
-      roomPrice = RoomsPrices.PALACE;
+      roomPrice = roomsPrices.PALACE;
       break;
   }
-  PRICE.placeholder = roomPrice;
+  priceElement.placeholder = roomPrice;
 };
 
-changeHousingType(TYPE.value);
+changeHousingType(typeElement.value);
 
-TYPE.addEventListener('change', (evt) => {
+typeElement.addEventListener('change', (evt) => {
   changeHousingType(evt.target.value);
-  switch (TYPE.value) {
+  switch (typeElement.value) {
     case 'bungalow':
-      PRICE.min = 0;
+      priceElement.min = 0;
       break;
     case 'flat':
-      PRICE.min = 1000;
+      priceElement.min = 1000;
       break;
     case 'hotel':
-      PRICE.min = 3000;
+      priceElement.min = 3000;
       break;
     case 'house':
-      PRICE.min = 5000;
+      priceElement.min = 5000;
       break;
     case 'palace':
-      PRICE.min = 10000;
+      priceElement.min = 10000;
       break;
     default:
-      return PRICE.setCustomValidity('');
+      return priceElement.setCustomValidity('');
   }
-  PRICE.reportValidity();
+  priceElement.reportValidity();
 });
 
-// Время заезда, Время выезда
-
 const changeTimeOutValue = (value) => {
-  TIME_OUT.value = value;
+  timeOutElement.value = value;
 };
 
 const changeTimeInValue = (value) => {
-  TIME_IN.value = value;
+  timeInElement.value = value;
 };
 
-changeTimeOutValue(TIME_IN.value);
+changeTimeOutValue(timeInElement.value);
 
-TIME_IN.addEventListener('change', (evt) => {
+timeInElement.addEventListener('change', (evt) => {
   changeTimeOutValue(evt.target.value);
 });
 
-TIME_OUT.addEventListener('change', (evt) =>{
+timeOutElement.addEventListener('change', (evt) =>{
   changeTimeInValue(evt.target.value);
 });
 
 getPagesDisabled ();
 
-export {getPagesActivate, AD_FORM, MAP_FILTERS};
+export {getPagesActivate, formElement, mapFiltersElement};

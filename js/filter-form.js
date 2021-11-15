@@ -1,15 +1,13 @@
 import {getData} from './api.js';
-import {getRandomInteger, resetFilter, showAlert} from './util.js';
+import {resetMapShow, showAlert} from './util.js';
 import {createMarker} from './map.js';
 import {debounce} from './utils/debounce.js';
-import {throttle} from './utils/throttle.js';
 
-const mapFilters = document.querySelector('.map__filters');
-const housingTypeFilter = mapFilters.querySelector('#housing-type');
-const housingPriceFilter = mapFilters.querySelector('#housing-price');
-const housingRoomsFilter = mapFilters.querySelector('#housing-rooms');
-const housingGuestsFilter = mapFilters.querySelector('#housing-guests');
-const housingFeaturesList = mapFilters.querySelectorAll('.map__checkbox');
+const mapFiltersElement = document.querySelector('.map__filters');
+const housingTypeElement = mapFiltersElement.querySelector('#housing-type');
+const housingPriceElement = mapFiltersElement.querySelector('#housing-price');
+const housingRoomsElement = mapFiltersElement.querySelector('#housing-rooms');
+const housingGuestsElement = mapFiltersElement.querySelector('#housing-guests');
 
 const PriceLimits = {
   LOW: 10000,
@@ -18,9 +16,8 @@ const PriceLimits = {
 
 const getDataOutput = () => {
   getData((data) => {
-    console.log(data);
-    data.length = 10;
-    data.forEach((point) => {
+    const DATA = data.slice(0, 10);
+    DATA.forEach((point) => {
       createMarker(point);
     });
   });
@@ -29,16 +26,27 @@ const getDataOutput = () => {
 getDataOutput();
 
 const getFilterData = () => {
-  resetFilter();
+  resetMapShow();
   getData((data) => {
 
-    housingFeaturesList.forEach((element) => {
-      if (element.checked) {
-        const checkedElement = element.value;
-        console.log(checkedElement);
-        data = data.filter((pin) => pin.offer.features.includes(checkedElement));
-      }
-    });
+    const getFeaturesRank = (element) => {
+      const selectedFeaturesElements = mapFiltersElement.querySelectorAll('.map__checkbox:checked');
+      let rank = 0;
+      selectedFeaturesElements.forEach((feature) => {
+        if (element.offer.features && element.offer.features.includes(feature.value)) {
+          rank += 1;
+        }
+      });
+      return rank;
+    };
+
+    const compareOfferRank = (wizardA, wizardB) => {
+      const offerRankA = getFeaturesRank(wizardA);
+      const offerRankB = getFeaturesRank(wizardB);
+      return offerRankB - offerRankA;
+    };
+
+    data = data.sort(compareOfferRank);
 
     const filterPinsByType = (value) => {
       data = data.filter((pin) => pin.offer.type === value);
@@ -67,64 +75,41 @@ const getFilterData = () => {
       data = data.filter((pin) => pin.offer.guests === Number(value));
     };
 
-    const Filters = [
+    const filters = [
       {
-        name: housingTypeFilter,
+        name: housingTypeElement,
         filterFunction: filterPinsByType,
       },
       {
-        name: housingPriceFilter,
+        name: housingPriceElement,
         filterFunction: filterPinsByPrice,
       },
       {
-        name: housingRoomsFilter,
+        name: housingRoomsElement,
         filterFunction: filterPinsByRooms,
       },
       {
-        name: housingGuestsFilter,
+        name: housingGuestsElement,
         filterFunction: filterPinsByGuests,
       },
     ];
 
-    Filters.forEach((obj) => {
-      const selectValue = obj.name.value;
+    filters.forEach((object) => {
+      const selectValue = object.name.value;
 
       if (selectValue !== 'any') {
-        obj.filterFunction(selectValue);
+        object.filterFunction(selectValue);
       }
     });
 
     if (data.length === 0) {
       return showAlert('Нет совпадений');
     }
-    data.length = 10;
-    data.forEach((point) => {
+    const DATA = data.slice(0, 10);
+    DATA.forEach((point) => {
       createMarker(point);
     });
   });
 };
 
-mapFilters.addEventListener('change', debounce(getFilterData));
-
-// const resetFeatures = () => {
-//   mapFilters.querySelectorAll('select').forEach((select) => {
-//     select.value = 'any';
-//   });
-//   housingFeaturesList.forEach((element) => {
-//     element.checked = false;
-//   });
-// };
-// data.length = 10;
-
-// Вариант 1
-// const filtrationByFeatures = (item) => Array.from(housingFeaturesList).every((element) => item.offer.features.includes(element.id.replace(/filter-/g, '')));
-// console.log(filtrationByFeatures());
-// data = data.filter(filtrationByFeatures);
-
-// Вариант 2
-
-// mapFilters.querySelectorAll('select').forEach((select) => {
-//   if (select.checked === 'any') {
-//     return getDataOutput();
-//   }
-// });
+mapFiltersElement.addEventListener('change', debounce(getFilterData));
