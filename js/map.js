@@ -6,8 +6,8 @@ const map = L.map('map-canvas')
     getPagesActivate ();
   })
   .setView({
-    lat: 35.681729,
-    lng: 139.753927,
+    lat: 35.68172,
+    lng: 139.75392,
   }, 13);
 
 L.tileLayer(
@@ -27,8 +27,8 @@ const mainPinIcon = L.icon({
 
 const marker = L.marker(
   {
-    lat: 35.681729,
-    lng: 139.753927,
+    lat: 35.68172,
+    lng: 139.75392,
   },
   {
     draggable: true,
@@ -38,19 +38,19 @@ const marker = L.marker(
 
 const resetMarker = () => {
   marker.setLatLng({
-    lat: 35.681729,
-    lng: 139.753927,
+    lat: 35.68172,
+    lng: 139.75392,
   });
 
   map.setView({
-    lat: 35.681729,
-    lng: 139.753927,
+    lat: 35.68172,
+    lng: 139.75392,
   }, 13);
 };
 
 marker.addTo(map);
 
-// Координат в поле Адреса
+// Координаты в поле Адреса
 
 marker.on('drag', (evt) => {
   const ADDRESS = document.querySelector('#address');
@@ -88,4 +88,4 @@ const createMarker = (point) => {
     .bindPopup(createCustomPopup(point));
 };
 
-export {createMarker, map, resetMarker};
+export {createMarker, map, resetMarker, markerGroup};
