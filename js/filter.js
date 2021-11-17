@@ -3,21 +3,21 @@ import {resetMapShow, showAlert} from './util.js';
 import {createMarker} from './map.js';
 import {debounce} from './utils/debounce.js';
 
+const PriceLimits = {
+  LOW: 10000,
+  HIGH: 50000,
+};
+
 const mapFiltersElement = document.querySelector('.map__filters');
 const housingTypeElement = mapFiltersElement.querySelector('#housing-type');
 const housingPriceElement = mapFiltersElement.querySelector('#housing-price');
 const housingRoomsElement = mapFiltersElement.querySelector('#housing-rooms');
 const housingGuestsElement = mapFiltersElement.querySelector('#housing-guests');
 
-const PriceLimits = {
-  LOW: 10000,
-  HIGH: 50000,
-};
-
 const getDataOutput = () => {
   getData((data) => {
-    const DATA = data.slice(0, 10);
-    DATA.forEach((point) => {
+    const slicedData = data.slice(0, 10);
+    slicedData.forEach((point) => {
       createMarker(point);
     });
   });
@@ -105,8 +105,8 @@ const getFilterData = () => {
     if (data.length === 0) {
       return showAlert('Нет совпадений');
     }
-    const DATA = data.slice(0, 10);
-    DATA.forEach((point) => {
+    const filteredData = data.slice(0, 10);
+    filteredData.forEach((point) => {
       createMarker(point);
     });
   });

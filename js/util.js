@@ -1,63 +1,46 @@
 import {formElement, mapFiltersElement} from './form.js';
 import {map, resetMarker, markerGroup} from './map.js';
 
+const DISPLAY_ERROR_TIME = 1500;
+const ALERT_SHOW_TIME = 1000;
+
 const getError = () => {
-  const error = document.querySelector('#error')
+  const errorElement = document.querySelector('#error')
     .content
     .querySelector('.error');
-  const errorElement = error.cloneNode(true);
+  const errorNode = errorElement.cloneNode(true);
 
-  document.body.append(errorElement);
+  document.body.append(errorNode);
 
   document.addEventListener('click', (evt) => {
     evt.preventDefault();
-    errorElement.remove();
+    errorNode.remove();
   });
 
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      errorElement.remove();
+      errorNode.remove();
     }
   });
 };
 
 const getSuccess = () => {
-  const ERROR_SHOW_TIME = 1500;
-  const success = document.querySelector('#success')
+  const successElement = document.querySelector('#success')
     .content
     .querySelector('.success');
-  const successElement = success.cloneNode(true);
+  const successNode = successElement.cloneNode(true);
 
-  document.body.append(successElement);
+  document.body.append(successNode);
 
   setTimeout(() => {
-    successElement.remove();
+    successNode.remove();
     formElement.reset();
     mapFiltersElement.reset();
     map.closePopup();
     resetMarker();
-  }, ERROR_SHOW_TIME);
+  }, DISPLAY_ERROR_TIME);
 };
-
-const reset = document.querySelector('.ad-form__reset');
-
-reset.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  mapFiltersElement.reset();
-  formElement.reset();
-  map.closePopup();
-  resetMarker();
-});
-
-function getRandomInteger (min, max) {
-  if (max <= min || min < 0) {
-    return 'Введено недопустимое значение';
-  }
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 const resetMapShow = () => {
   map.closePopup();
@@ -66,7 +49,6 @@ const resetMapShow = () => {
 };
 
 const showAlert = (message) => {
-  const ALERT_SHOW_TIME = 1000;
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
@@ -86,4 +68,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getError, getSuccess, getRandomInteger, resetMapShow, showAlert};
+export {getError, getSuccess, resetMapShow, showAlert};

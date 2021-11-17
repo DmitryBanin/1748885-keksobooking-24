@@ -1,3 +1,23 @@
+// import {map, resetMarker} from './map.js';
+
+const MIN_TEXT_LENGTH = 30;
+const MAX_TEXT_LENGTH = 100;
+
+const roomsGuests = {
+  1: ['1'],
+  2: ['1', '2'],
+  3: ['1', '2', '3'],
+  100: ['0'],
+};
+
+const RoomsPrices = {
+  BUNGALOW: 0,
+  FLAT: 1000,
+  HOTEL: 3000,
+  HOUSE: 5000,
+  PALACE: 10000,
+};
+
 const formElement = document.querySelector('.ad-form');
 const mapFiltersElement = document.querySelector('.map__filters');
 const titleElement = formElement.querySelector('#title');
@@ -7,8 +27,9 @@ const priceElement = formElement.querySelector('#price');
 const typeElement = formElement.querySelector('#type');
 const timeInElement = formElement.querySelector('#timein');
 const timeOutElement = formElement.querySelector('#timeout');
+// const resetFormElement = document.querySelector('.ad-form__reset');
 
-function getPagesDisabled () {
+const getPagesDisabled = () => {
   formElement.classList.add('ad-form--disabled');
   const fieldsetElements = formElement.querySelectorAll('fieldset');
   fieldsetElements.forEach((disabled) => {
@@ -19,9 +40,9 @@ function getPagesDisabled () {
   selectElements.forEach((disabled) => {
     disabled.setAttribute('disabled', 'disabled');
   });
-}
+};
 
-function getPagesActivate () {
+const getPagesActivate = () => {
   formElement.classList.remove('ad-form--disabled');
   const fieldsetElements = formElement.querySelectorAll('fieldset');
   fieldsetElements.forEach((disabled) => {
@@ -32,10 +53,7 @@ function getPagesActivate () {
   selectElements.forEach((disabled) => {
     disabled.removeAttribute('disabled', 'disabled');
   });
-}
-
-const MIN_TEXT_LENGTH = 30;
-const MAX_TEXT_LENGTH = 100;
+};
 
 titleElement.addEventListener('input', () => {
   const valueLength = titleElement.value.length;
@@ -48,13 +66,6 @@ titleElement.addEventListener('input', () => {
   }
   titleElement.reportValidity();
 });
-
-const roomsGuests = {
-  1: ['1'],
-  2: ['1', '2'],
-  3: ['1', '2', '3'],
-  100: ['0'],
-};
 
 const changeRoomNumberValue = (value) => {
   [...capacityElement.options].forEach((option) => {
@@ -69,31 +80,23 @@ roomNumberElement.addEventListener('change', (evt) => {
   changeRoomNumberValue(evt.target.value);
 });
 
-const roomsPrices = {
-  BUNGALOW: 0,
-  FLAT: 1000,
-  HOTEL: 3000,
-  HOUSE: 5000,
-  PALACE: 10000,
-};
-
 const changeHousingType = (value) => {
   let roomPrice = 0;
   switch (value) {
     case 'bungalow':
-      roomPrice = roomsPrices.BUNGALOW;
+      roomPrice = RoomsPrices.BUNGALOW;
       break;
     case 'flat':
-      roomPrice = roomsPrices.FLAT;
+      roomPrice = RoomsPrices.FLAT;
       break;
     case 'hotel':
-      roomPrice = roomsPrices.HOTEL;
+      roomPrice = RoomsPrices.HOTEL;
       break;
     case 'house':
-      roomPrice = roomsPrices.HOUSE;
+      roomPrice = RoomsPrices.HOUSE;
       break;
     case 'palace':
-      roomPrice = roomsPrices.PALACE;
+      roomPrice = RoomsPrices.PALACE;
       break;
   }
   priceElement.placeholder = roomPrice;
@@ -105,19 +108,19 @@ typeElement.addEventListener('change', (evt) => {
   changeHousingType(evt.target.value);
   switch (typeElement.value) {
     case 'bungalow':
-      priceElement.min = 0;
+      priceElement.min = RoomsPrices.BUNGALOW;
       break;
     case 'flat':
-      priceElement.min = 1000;
+      priceElement.min = RoomsPrices.FLAT;
       break;
     case 'hotel':
-      priceElement.min = 3000;
+      priceElement.min = RoomsPrices.HOTEL;
       break;
     case 'house':
-      priceElement.min = 5000;
+      priceElement.min = RoomsPrices.HOUSE;
       break;
     case 'palace':
-      priceElement.min = 10000;
+      priceElement.min = RoomsPrices.PALACE;
       break;
     default:
       return priceElement.setCustomValidity('');
@@ -142,6 +145,14 @@ timeInElement.addEventListener('change', (evt) => {
 timeOutElement.addEventListener('change', (evt) =>{
   changeTimeInValue(evt.target.value);
 });
+
+// resetFormElement.addEventListener('click', (evt) => {
+//   evt.preventDefault();
+//   mapFiltersElement.reset();
+//   formElement.reset();
+//   map.closePopup();
+//   resetMarker();
+// });
 
 getPagesDisabled ();
 

@@ -1,14 +1,22 @@
 import {getPagesActivate} from './form.js';
 import {createCustomPopup} from './creating-markup.js';
 
+const DefaultViewParametrs = {
+  LAT: 35.68172,
+  LNG: 139.75392,
+  ZOOM: 13,
+  MAGOR_PIN_SIZE: 52,
+  PIN_SIZE: 40,
+};
+
 const map = L.map('map-canvas')
   .on('load', () => {
     getPagesActivate ();
   })
   .setView({
-    lat: 35.68172,
-    lng: 139.75392,
-  }, 13);
+    lat: DefaultViewParametrs.LAT,
+    lng: DefaultViewParametrs.LNG,
+  }, DefaultViewParametrs.ZOOM);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -17,18 +25,16 @@ L.tileLayer(
   },
 ).addTo(map);
 
-// Главная метка
-
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: [DefaultViewParametrs.MAGOR_PIN_SIZE, DefaultViewParametrs.MAGOR_PIN_SIZE],
+  iconAnchor: [DefaultViewParametrs.MAGOR_PIN_SIZE/2, DefaultViewParametrs.MAGOR_PIN_SIZE],
 });
 
 const marker = L.marker(
   {
-    lat: 35.68172,
-    lng: 139.75392,
+    lat: DefaultViewParametrs.LAT,
+    lng: DefaultViewParametrs.LNG,
   },
   {
     draggable: true,
@@ -38,27 +44,25 @@ const marker = L.marker(
 
 const resetMarker = () => {
   marker.setLatLng({
-    lat: 35.68172,
-    lng: 139.75392,
+    lat: DefaultViewParametrs.LAT,
+    lng: DefaultViewParametrs.LNG,
   });
 
   map.setView({
-    lat: 35.68172,
-    lng: 139.75392,
-  }, 13);
+    lat: DefaultViewParametrs.LAT,
+    lng: DefaultViewParametrs.LNG,
+  }, DefaultViewParametrs.ZOOM);
 };
 
 marker.addTo(map);
 
-// Координаты в поле Адреса
-
 marker.on('drag', (evt) => {
-  const ADDRESS = document.querySelector('#address');
+  const addressElement = document.querySelector('#address');
   const arrayСoordinates = evt.target.getLatLng();
   const {lat, lng} = arrayСoordinates;
-  const LAT = lat.toFixed(5);
-  const LNG = lng.toFixed(5);
-  ADDRESS.value = `${LAT}, ${LNG}`;
+  const latRounded = lat.toFixed(5);
+  const lngRounded = lng.toFixed(5);
+  addressElement.value = `${latRounded}, ${lngRounded}`;
 });
 
 const markerGroup = L.layerGroup().addTo(map);
@@ -69,8 +73,8 @@ const createMarker = (point) => {
 
   const icon = L.icon({
     iconUrl: './img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconSize: [DefaultViewParametrs.PIN_SIZE, DefaultViewParametrs.PIN_SIZE],
+    iconAnchor: [DefaultViewParametrs.PIN_SIZE/2, DefaultViewParametrs.PIN_SIZE],
   });
 
   const markers = L.marker(

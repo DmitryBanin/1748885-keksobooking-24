@@ -9,8 +9,8 @@ const getData = (onSuccess) => {
       }
       throw new Error;
     })
-    .then((dataServer) => {
-      onSuccess(dataServer);
+    .then((dataFromeServer) => {
+      onSuccess(dataFromeServer);
     })
     .catch(() => {
       showAlert('Не удалось загрузить данные');
