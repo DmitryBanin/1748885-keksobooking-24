@@ -1,7 +1,7 @@
-import {getData} from './api.js';
-import {resetMapShow, showAlert} from './util.js';
+import {resetMapShow, showAlert, getDataOutput} from './util.js';
 import {createMarker} from './map.js';
 import {debounce} from './utils/debounce.js';
+import {getData} from './api.js';
 
 const PriceLimits = {
   LOW: 10000,
@@ -13,15 +13,6 @@ const housingTypeElement = mapFiltersElement.querySelector('#housing-type');
 const housingPriceElement = mapFiltersElement.querySelector('#housing-price');
 const housingRoomsElement = mapFiltersElement.querySelector('#housing-rooms');
 const housingGuestsElement = mapFiltersElement.querySelector('#housing-guests');
-
-const getDataOutput = () => {
-  getData((data) => {
-    const slicedData = data.slice(0, 10);
-    slicedData.forEach((point) => {
-      createMarker(point);
-    });
-  });
-};
 
 getDataOutput();
 

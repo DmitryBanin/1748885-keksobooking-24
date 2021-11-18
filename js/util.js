@@ -1,8 +1,37 @@
 import {formElement, mapFiltersElement} from './form.js';
-import {map, resetMarker, markerGroup} from './map.js';
+import {map, resetMarker, markerGroup, createMarker} from './map.js';
+import {getData} from './api.js';
 
 const DISPLAY_ERROR_TIME = 1500;
 const ALERT_SHOW_TIME = 1000;
+const DEFAULT_PRICE_VALUE = '1000';
+const DEFAULT_PREVIEW_AVATAR = 'img/muffin-grey.svg';
+const DEFAULT_PREVIEW_PHOTO = '';
+
+const priceResetForm = document.querySelector('#price');
+const previewAvatarElement = document.querySelector('.ad-form-header__preview img');
+const previewPhotoElement = document.querySelector('.ad-form__photo');
+
+const resetElements = () => {
+  priceResetForm.value = DEFAULT_PRICE_VALUE;
+  previewAvatarElement.src = DEFAULT_PREVIEW_AVATAR;
+  previewPhotoElement.innerHTML = DEFAULT_PREVIEW_PHOTO;
+};
+
+const resetMapShow = () => {
+  map.closePopup();
+  resetMarker();
+  markerGroup.clearLayers();
+};
+
+const getDataOutput = () => {
+  getData((data) => {
+    const slicedData = data.slice(0, 10);
+    slicedData.forEach((point) => {
+      createMarker(point);
+    });
+  });
+};
 
 const getError = () => {
   const errorElement = document.querySelector('#error')
@@ -12,17 +41,23 @@ const getError = () => {
 
   document.body.append(errorNode);
 
-  document.addEventListener('click', (evt) => {
+  const documentErrorClickHeandler = (evt) => {
     evt.preventDefault();
     errorNode.remove();
-  });
+    document.removeEventListener('click', documentErrorClickHeandler);
+  };
 
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
+  document.addEventListener('click', documentErrorClickHeandler);
+
+  const documentErrorClickHeandlerEscape = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
       evt.preventDefault();
       errorNode.remove();
+      document.removeEventListener('click', documentErrorClickHeandlerEscape);
     }
-  });
+  };
+
+  document.addEventListener('keydown', documentErrorClickHeandlerEscape);
 };
 
 const getSuccess = () => {
@@ -35,17 +70,14 @@ const getSuccess = () => {
 
   setTimeout(() => {
     successNode.remove();
-    formElement.reset();
     mapFiltersElement.reset();
+    formElement.reset();
     map.closePopup();
-    resetMarker();
+    getDataOutput();
+    resetMapShow();
+    resetElements();
+    getDataOutput();
   }, DISPLAY_ERROR_TIME);
-};
-
-const resetMapShow = () => {
-  map.closePopup();
-  resetMarker();
-  markerGroup.clearLayers();
 };
 
 const showAlert = (message) => {
@@ -68,4 +100,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getError, getSuccess, resetMapShow, showAlert};
+export {getError, getSuccess, resetMapShow, showAlert, resetElements, getDataOutput};

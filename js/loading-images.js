@@ -26,3 +26,5 @@ fileFormUploadElement.addEventListener('change', () => {
     img.src = URL.createObjectURL(file);
   }
 });
+
+

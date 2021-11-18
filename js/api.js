@@ -1,5 +1,5 @@
 import {getError, getSuccess, showAlert} from './util.js';
-import {formElement} from './form.js';
+import {formElement, getPagesDisabled} from './form.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
@@ -14,6 +14,7 @@ const getData = (onSuccess) => {
     })
     .catch(() => {
       showAlert('Не удалось загрузить данные');
+      getPagesDisabled();
     });
 };
 

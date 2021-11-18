@@ -1,14 +1,21 @@
-import {map, resetMarker} from './map.js';
+import {map} from './map.js';
 import {formElement, mapFiltersElement} from './form.js';
+import {getDataOutput} from './util.js';
+import {resetMapShow, resetElements} from './util.js';
 
 const resetFormElement = document.querySelector('.ad-form__reset');
-const priceresetForm = document.querySelector('#price');
 
-resetFormElement.addEventListener('click', (evt) => {
+const resetFormClickHeandler = (evt) => {
   evt.preventDefault();
   mapFiltersElement.reset();
   formElement.reset();
   map.closePopup();
-  resetMarker();
-  priceresetForm.placeholder = '1000';
-});
+  getDataOutput();
+  resetMapShow();
+  resetElements();
+  document.removeEventListener('click', resetFormClickHeandler);
+};
+
+resetFormElement.addEventListener('click', resetFormClickHeandler);
+
+

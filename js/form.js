@@ -1,5 +1,3 @@
-// import {map, resetMarker} from './map.js';
-
 const MIN_TEXT_LENGTH = 30;
 const MAX_TEXT_LENGTH = 100;
 
@@ -27,7 +25,6 @@ const priceElement = formElement.querySelector('#price');
 const typeElement = formElement.querySelector('#type');
 const timeInElement = formElement.querySelector('#timein');
 const timeOutElement = formElement.querySelector('#timeout');
-// const resetFormElement = document.querySelector('.ad-form__reset');
 
 const getPagesDisabled = () => {
   formElement.classList.add('ad-form--disabled');
@@ -146,14 +143,4 @@ timeOutElement.addEventListener('change', (evt) =>{
   changeTimeInValue(evt.target.value);
 });
 
-// resetFormElement.addEventListener('click', (evt) => {
-//   evt.preventDefault();
-//   mapFiltersElement.reset();
-//   formElement.reset();
-//   map.closePopup();
-//   resetMarker();
-// });
-
-getPagesDisabled ();
-
-export {getPagesActivate, formElement, mapFiltersElement};
+export {getPagesActivate, getPagesDisabled, formElement, mapFiltersElement};
