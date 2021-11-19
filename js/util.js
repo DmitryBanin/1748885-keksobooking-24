@@ -14,6 +14,7 @@ const previewPhotoElement = document.querySelector('.ad-form__photo');
 
 const resetElements = () => {
   priceResetForm.placeholder = DEFAULT_PRICE_VALUE;
+  priceResetForm.min = DEFAULT_PRICE_VALUE;
   previewAvatarElement.src = DEFAULT_PREVIEW_AVATAR;
   previewPhotoElement.innerHTML = DEFAULT_PREVIEW_PHOTO;
 };
