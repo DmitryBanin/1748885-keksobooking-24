@@ -21,7 +21,7 @@ fileFormUploadElement.addEventListener('change', () => {
   const matches = FILE_TYPES.some((fileType) => fileName.endsWith(fileType));
 
   if (matches) {
-    previewPhotoElement.innerHTML = '<img src width="70" height="70" borderRadius="5">';
+    previewPhotoElement.innerHTML = '<img src width="70" height="70">';
     const img = previewPhotoElement.querySelector('img');
     img.src = URL.createObjectURL(file);
   }
